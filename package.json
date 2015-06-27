@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/mattgj/alexa-skills#readme",
   "dependencies": {
-    "request": "^2.58.0"
+    "normalizeurl": "^0.1.3",
+    "request": "^2.58.0",
+    "x509": "mattgj/node-x509"
   }
 }
