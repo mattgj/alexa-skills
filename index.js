@@ -1,26 +1,34 @@
-module.exports = function(app, route) {
+module.exports = function(options) {
 
     var RequestValidator = require('./request-validator'),
+        jsonParser = require('body-parser').json(),
+        app = options.express,
+        route = options.route || "/",
+        appId = options.applicationId || "",
         launchCallback = null,
         endedCallback = null,
         intents = {};
 
-    app.post(route, RequestValidator, function(req, res) {
+    app.post(route, jsonParser, RequestValidator, function(req, res) {
 
-        switch(req.body.request.type) {
+        if(req.body.session.application.applicationId == appId || !appId.length) {
 
-            case "LaunchRequest": 
-                if(launchCallback) 
-                    launchCallback(req, res); 
-                break;
-            case "IntentRequest": 
-                if(intents[req.body.request.intent.name])
-                    intents[req.body.request.intent.name](req, res, req.body.request.intent.slots);
-                break;
-            case "SessionEndedRequest": 
-                if(endedCallback) 
-                    endedCallback(req, res, req.body.request.reason);
-                break;
+            switch(req.body.request.type) {
+
+                case "LaunchRequest":
+                    if(launchCallback)
+                        launchCallback(req, res);
+                    break;
+                case "IntentRequest":
+                    if(intents[req.body.request.intent.name])
+                        intents[req.body.request.intent.name](req, res, req.body.request.intent.slots);
+                    break;
+                case "SessionEndedRequest":
+                    if(endedCallback)
+                        endedCallback(req, res, req.body.request.reason);
+                    break;
+
+            }
 
         }
 
@@ -40,7 +48,7 @@ module.exports = function(app, route) {
 
     this.send = function(req, res, options) {
 
-        if(!"shouldEndSession" in options)
+        if(!("shouldEndSession" in options))
             options.shouldEndSession = true;
 
         var response = {

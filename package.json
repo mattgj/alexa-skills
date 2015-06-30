@@ -1,6 +1,6 @@
 {
   "name": "alexa-skills",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Alexa Skills for Node simplifies the process of creating new skills for Alexa.",
   "main": "index.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/mattgj/alexa-skills#readme",
   "dependencies": {
+    "body-parser": "^1.13.1",
     "normalizeurl": "^0.1.3",
     "request": "^2.58.0",
     "x509": "mattgj/node-x509"
