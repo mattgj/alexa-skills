@@ -84,11 +84,35 @@ module.exports = function(options) {
     };
 
     this.buildCard = function(title, content) {
-        return {
-            "type": "Simple",
-            "title": title,
-            "content": content
-        };
+        return this.buildSimpleCard(title, content);
     };
+
+    this.buildSimpleCard = function(title, content) {
+        var card = {};
+        card.type = "Simple";
+        card.title = title;
+        card.content = content;
+        return card;
+    }
+
+    this.buildStandardCard = function(title, text, smallImageUrl,largeImageUrl)
+    {
+        var card = {};
+        card.type = "Standard";
+        card.title = title;
+        card.text = text;
+        card.image = {};
+        card.image.smallImageUrl = smallImageUrl;
+        card.image.largeImageUrl = largeImageUrl;
+        return card;
+    }
+
+    this.buildLinkAccountCard = function(text)
+    {
+        var card = {};
+        card.type = "LinkAccount";
+        card.text = text;
+        return card;
+    }
 
 };
