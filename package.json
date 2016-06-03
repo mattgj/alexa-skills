@@ -1,6 +1,6 @@
 {
   "name": "alexa-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Alexa Skills for Node simplifies the process of creating new skills for Alexa.",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,11 @@
     "kit"
   ],
   "author": "Matt Johnson",
+  "contributors": [{
+    "name": "Harrison Jones",
+    "email": "harrison@hhj.me",
+    "url": "harrisonhjones.com"
+    }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mattgj/alexa-skills/issues"

@@ -6,6 +6,44 @@ Alexa Skills for Node simplifies the process of creating new skills for Alexa.
 
 This module relies on the [node-x509 module](https://github.com/Southern/node-x509) for verifying that the request is coming from Amazon. If you are developing on a Windows machine, you will need to [install OpenSSL](http://slproweb.com/products/Win32OpenSSL.html) to the default location, "C:\\OpenSSL-Win32" or "C:\\OpenSSL-Win64", before installing alexa-skills. OpenSSL is required for node-x509 to compile.
 
+## Supported Card Types
+
+### Simple Card
+
+``` buildSimpleCard(title, content) ```
+
+### Standard Card
+
+``` buildStandardCard(title, text, smallImageUrl,largeImageUrl) ```
+
+### Account Link Card
+
+``` buildLinkAccountCard(text) ```
+
+
+## Supported Output Types
+
+### PlainText
+
+```
+var phrase = 'Hello World!';
+	var options = {
+		shouldEndSession: true,
+		outputSpeech: phrase,
+		card: alexa.buildCard("Card Title", phrase)
+	};
+```
+
+### SSML
+
+```
+var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>!';
+	var options = {
+		shouldEndSession: true,
+		outputSSML: phrase
+	};
+```
+
 ## Example
 ```javascript
 var express 	= require('express'),
@@ -15,7 +53,7 @@ var express 	= require('express'),
 	alexa = new AlexaSkills({
 		express: app, // required
 		route: "/", // optional, defaults to "/"
-		applicationId: "your_alexa_app_id" // optional, but recommended
+		applicationId: "your_alexa_app_id" // optional, but recommended. If you do not set this leave it blank
 	});
 
 alexa.launch(function(req, res) {
@@ -44,9 +82,24 @@ alexa.intent('Hello', function(req, res, slots) {
 	alexa.send(req, res, options);
 });
 
+alexa.intent('Spell hello', function(req, res, slots) {
+
+	console.log(slots);
+
+	var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>!';
+	var options = {
+		shouldEndSession: true,
+		outputSSML: phrase
+	};
+
+	alexa.send(req, res, options);
+});
+
 alexa.ended(function(req, res, reason) {
 	console.log(reason);
 });
 
 app.listen(port);
 ```
+
+
