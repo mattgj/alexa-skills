@@ -59,7 +59,7 @@ module.exports = function(options) {
 
         var response = {
             version: req.body.version,
-            sessionAttributes: sessionAttributes,
+            sessionAttributes: (sessionAttributes || req.body.session.attributes),
             response: {
                 shouldEndSession: options.shouldEndSession
             }
