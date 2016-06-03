@@ -2,6 +2,7 @@
 
   - Added support for SSML
   - Added support for Standard and Account Link cards
+  - Added support for session manipulation
 
 ## 0.1.0 (2015-06-29)
 

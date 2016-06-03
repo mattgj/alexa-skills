@@ -44,6 +44,39 @@ var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>!';
 	};
 ```
 
+## Session Manipulation
+
+You can access session attributes from the 4th paramter passed to your intent function, `sessionAttributes`. Remember to pass it back as the 3rd paramter to `alexa.send(...)`. 
+
+### Example
+
+Assumes you have an intent called `SessionIntent` with a slot called `city`.
+
+```
+alexa.intent('SessionTest', function(req, res, slots, sessionAttributes) {
+
+    var phrase = "";
+    if(sessionAttributes.previous)
+    {
+        phrase = 'You previously said "' + sessionAttributes.previous + '". I have replaced that with "' + slots.city.value + '". Please say another city name.';
+    }
+    else
+    {
+        phrase = 'You said "' + slots.city.value + '". Please say another city name.';
+    }
+
+    sessionAttributes.previous = slots.city.value;
+    
+    var options = {
+        shouldEndSession: false,
+        outputSpeech: phrase
+    };
+
+    alexa.send(req, res, options, sessionAttributes);
+});
+````
+
+
 ## Example
 ```javascript
 var express 	= require('express'),
