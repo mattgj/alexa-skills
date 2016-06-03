@@ -18,14 +18,20 @@ module.exports = function(options) {
                 case "LaunchRequest":
                     if(launchCallback)
                         launchCallback(req, res);
+                    else
+                        throw ("LaunchRequest not handled")
                     break;
                 case "IntentRequest":
                     if(intents[req.body.request.intent.name])
                         intents[req.body.request.intent.name](req, res, req.body.request.intent.slots);
+                    else
+                        throw ("IntentRequest for `" + req.body.request.intent.name + "` not handled")
                     break;
                 case "SessionEndedRequest":
                     if(endedCallback)
                         endedCallback(req, res, req.body.request.reason);
+                    else
+                        throw ("SessionEndedRequest not handled")
                     break;
             }
         }
