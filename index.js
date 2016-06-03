@@ -27,11 +27,8 @@ module.exports = function(options) {
                     if(endedCallback)
                         endedCallback(req, res, req.body.request.reason);
                     break;
-
             }
-
         }
-
     });
 
     this.launch = function(callback) {
@@ -64,6 +61,11 @@ module.exports = function(options) {
                 type: "PlainText",
                 text: options.outputSpeech
             };
+        } else if(options.outputSSML && options.outputSSML.length) {
+            response.response.outputSpeech = {
+                type: "SSML",
+                ssml: options.outputSSML
+            };
         }
 
         if(options.reprompt && options.reprompt.length) {
@@ -73,12 +75,20 @@ module.exports = function(options) {
                     text: options.reprompt
                 }
             };
+        } else if(options.repromptSSML && options.repromptSSML.length) {
+            response.response.reprompt = {
+                outputSpeech: {
+                    type: "SSML",
+                    ssml: options.repromptSSML
+                }
+            };
         }
 
         if(options.card) {
             response.response.card = options.card;
         }
 
+        res.header("Content-Type", "application/json; charset=utf-8");
         res.send(response);
 
     };
