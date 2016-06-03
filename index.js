@@ -22,16 +22,19 @@ module.exports = function(options) {
                         throw ("LaunchRequest not handled")
                     break;
                 case "IntentRequest":
+
+                    if(!req.body.session.attributes)
+                        req.body.session.attributes = {};
+
                     if(intents[req.body.request.intent.name])
-                        intents[req.body.request.intent.name](req, res, req.body.request.intent.slots);
+                        intents[req.body.request.intent.name](req, res, req.body.request.intent.slots, req.body.session.attributes);
                     else
                         throw ("IntentRequest for `" + req.body.request.intent.name + "` not handled")
                     break;
                 case "SessionEndedRequest":
                     if(endedCallback)
                         endedCallback(req, res, req.body.request.reason);
-                    else
-                        throw ("SessionEndedRequest not handled")
+                    res.json({});
                     break;
             }
         }
@@ -49,14 +52,14 @@ module.exports = function(options) {
         endedCallback = callback;
     };
 
-    this.send = function(req, res, options) {
+    this.send = function(req, res, options, sessionAttributes) {
 
         if(!("shouldEndSession" in options))
             options.shouldEndSession = true;
 
         var response = {
             version: req.body.version,
-            sessionAttributes: req.body.session.attributes,
+            sessionAttributes: sessionAttributes,
             response: {
                 shouldEndSession: options.shouldEndSession
             }
@@ -95,7 +98,7 @@ module.exports = function(options) {
         }
 
         res.header("Content-Type", "application/json; charset=utf-8");
-        res.send(response);
+        res.json(response);
 
     };
 
