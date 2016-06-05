@@ -18,20 +18,26 @@ module.exports = function(options) {
                 case "LaunchRequest":
                     if(launchCallback)
                         launchCallback(req, res);
+                    else
+                        throw ("LaunchRequest not handled")
                     break;
                 case "IntentRequest":
+
+                    if(!req.body.session.attributes)
+                        req.body.session.attributes = {};
+
                     if(intents[req.body.request.intent.name])
-                        intents[req.body.request.intent.name](req, res, req.body.request.intent.slots);
+                        intents[req.body.request.intent.name](req, res, req.body.request.intent.slots, req.body.session.attributes);
+                    else
+                        throw ("IntentRequest for `" + req.body.request.intent.name + "` not handled")
                     break;
                 case "SessionEndedRequest":
                     if(endedCallback)
                         endedCallback(req, res, req.body.request.reason);
+                    res.json({});
                     break;
-
             }
-
         }
-
     });
 
     this.launch = function(callback) {
@@ -46,14 +52,14 @@ module.exports = function(options) {
         endedCallback = callback;
     };
 
-    this.send = function(req, res, options) {
+    this.send = function(req, res, options, sessionAttributes) {
 
         if(!("shouldEndSession" in options))
             options.shouldEndSession = true;
 
         var response = {
             version: req.body.version,
-            sessionAttributes: req.body.session.attributes,
+            sessionAttributes: (sessionAttributes || req.body.session.attributes),
             response: {
                 shouldEndSession: options.shouldEndSession
             }
@@ -64,6 +70,11 @@ module.exports = function(options) {
                 type: "PlainText",
                 text: options.outputSpeech
             };
+        } else if(options.outputSSML && options.outputSSML.length) {
+            response.response.outputSpeech = {
+                type: "SSML",
+                ssml: options.outputSSML
+            };
         }
 
         if(options.reprompt && options.reprompt.length) {
@@ -73,13 +84,21 @@ module.exports = function(options) {
                     text: options.reprompt
                 }
             };
+        } else if(options.repromptSSML && options.repromptSSML.length) {
+            response.response.reprompt = {
+                outputSpeech: {
+                    type: "SSML",
+                    ssml: options.repromptSSML
+                }
+            };
         }
 
         if(options.card) {
             response.response.card = options.card;
         }
 
-        res.send(response);
+        res.header("Content-Type", "application/json; charset=utf-8");
+        res.json(response);
 
     };
 
