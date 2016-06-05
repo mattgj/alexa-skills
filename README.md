@@ -37,7 +37,7 @@ var phrase = 'Hello World!';
 ### SSML
 
 ```
-var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>!';
+var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>';
 	var options = {
 		shouldEndSession: true,
 		outputSSML: phrase
@@ -46,7 +46,7 @@ var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>!';
 
 ## Session Manipulation
 
-You can access session attributes from the 4th paramter passed to your intent function, `sessionAttributes`. Remember to pass it back as the 3rd paramter to `alexa.send(...)`. 
+You can access session attributes from the 4th paramter passed to your intent function, `sessionAttributes`. Remember to pass it back as the 3rd paramter to `alexa.send(...)`.
 
 ### Example
 
@@ -66,7 +66,7 @@ alexa.intent('SessionTest', function(req, res, slots, sessionAttributes) {
     }
 
     sessionAttributes.previous = slots.city.value;
-    
+
     var options = {
         shouldEndSession: false,
         outputSpeech: phrase
@@ -134,5 +134,3 @@ alexa.ended(function(req, res, reason) {
 
 app.listen(port);
 ```
-
-

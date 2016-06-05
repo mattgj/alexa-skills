@@ -1,37 +1,37 @@
 {
-  "name": "alexa-skills",
-  "version": "0.2.0",
-  "description": "Alexa Skills for Node simplifies the process of creating new skills for Alexa.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/mattgj/alexa-skills.git"
-  },
-  "keywords": [
-    "alexa",
-    "amazon",
-    "echo",
-    "skills",
-    "kit"
-  ],
-  "author": "Matt Johnson",
-  "contributors": [{
-    "name": "Harrison Jones",
-    "email": "harrison@hhj.me",
-    "url": "harrisonhjones.com"
+    "name": "alexa-skills",
+    "version": "0.2.0",
+    "description": "Alexa Skills for Node simplifies the process of creating new skills for Alexa.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mattgj/alexa-skills.git"
+    },
+    "keywords": [
+        "alexa",
+        "amazon",
+        "echo",
+        "skills",
+        "kit"
+    ],
+    "author": "Matt Johnson <matt@debugroom.com>",
+    "contributors": [{
+        "name": "Harrison Jones",
+        "email": "harrison@hhj.me",
+        "url": "harrisonhjones.com"
     }],
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/mattgj/alexa-skills/issues"
-  },
-  "homepage": "https://github.com/mattgj/alexa-skills#readme",
-  "dependencies": {
-    "body-parser": "^1.13.1",
-    "normalizeurl": "^0.1.3",
-    "request": "^2.58.0",
-    "x509": "mattgj/node-x509"
-  }
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/mattgj/alexa-skills/issues"
+    },
+    "homepage": "https://github.com/mattgj/alexa-skills#readme",
+    "dependencies": {
+        "body-parser": "^1.13.1",
+        "normalizeurl": "^0.1.3",
+        "request": "^2.58.0",
+        "x509": "^0.2.5"
+    }
 }
