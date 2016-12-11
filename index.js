@@ -1,15 +1,20 @@
 module.exports = function(options) {
 
-    var RequestValidator = require('./request-validator'),
-        jsonParser = require('body-parser').json(),
+    var jsonParser = require('body-parser').json(),
         app = options.express,
         route = options.route || "/",
         appId = options.applicationId || "",
+        enableCertificateValidation = options.enableCertificateValidation || true,
         launchCallback = null,
         endedCallback = null,
+        middleware = [],
         intents = {};
 
-    app.post(route, jsonParser, RequestValidator, function(req, res) {
+    if (enableCertificateValidation) {
+      middleware.push(require('./request-validator'))
+    }
+
+    app.post(route, jsonParser, middleware, function(req, res) {
 
         if(req.body.session.application.applicationId == appId || !appId.length) {
 

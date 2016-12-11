@@ -86,6 +86,7 @@ var express 	= require('express'),
 	alexa = new AlexaSkills({
 		express: app, // required
 		route: "/", // optional, defaults to "/"
+		enableCertificateValidation: true, // optional, defaults to true, disable for local testing
 		applicationId: "your_alexa_app_id" // optional, but recommended. If you do not set this leave it blank
 	});
 
