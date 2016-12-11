@@ -101,7 +101,7 @@ alexa.launch(function(req, res) {
 	alexa.send(req, res, options);
 });
 
-alexa.intent('Hello', function(req, res, slots) {
+alexa.intent('HelloIntent', function(req, res, slots) {
 
 	console.log(slots);
 
@@ -115,11 +115,11 @@ alexa.intent('Hello', function(req, res, slots) {
 	alexa.send(req, res, options);
 });
 
-alexa.intent('Spell hello', function(req, res, slots) {
+alexa.intent('SpellHelloIntent', function(req, res, slots) {
 
 	console.log(slots);
 
-	var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as></speak>!';
+	var phrase = '<speak><say-as interpret-as="spell-out">hello</say-as>!</speak>';
 	var options = {
 		shouldEndSession: true,
 		outputSSML: phrase
